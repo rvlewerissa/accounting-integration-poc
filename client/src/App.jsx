@@ -1,81 +1,17 @@
-import { useState, useEffect } from 'react';
-
-const API_URL = 'http://localhost:3000';
+import { useXeroStatus } from './hooks/useXeroStatus';
+import { useXeroDisconnect } from './hooks/useXeroDisconnect';
+import { useXeroAuth } from './hooks/useXeroAuth';
+import { StatusIndicator } from './components/StatusIndicator';
+import { TenantList } from './components/TenantList';
 
 function App() {
-  const [connected, setConnected] = useState(false);
-  const [tenants, setTenants] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { isLoading, error, connected, tenants } = useXeroStatus();
+  const disconnectMutation = useXeroDisconnect();
+  const { connect, popupError } = useXeroAuth();
 
-  // Check connection status on mount
-  useEffect(() => {
-    checkStatus();
-  }, []);
+  const displayError = popupError || error?.message || disconnectMutation.error?.message;
 
-  // Listen for messages from popup
-  useEffect(() => {
-    function handleMessage(event) {
-      if (event.data.type === 'XERO_AUTH_SUCCESS') {
-        setConnected(true);
-        setTenants(event.data.tenants);
-        setError(null);
-      } else if (event.data.type === 'XERO_AUTH_ERROR') {
-        setError('Authorization failed: ' + event.data.error);
-      }
-    }
-
-    window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
-  }, []);
-
-  async function checkStatus() {
-    try {
-      const res = await fetch(`${API_URL}/api/status`);
-      const data = await res.json();
-
-      if (data.connected) {
-        setConnected(true);
-        setTenants(data.tenants || []);
-      } else {
-        setConnected(false);
-        setTenants([]);
-      }
-    } catch (err) {
-      setError('Failed to check status: ' + err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  function connectToXero() {
-    const width = 600;
-    const height = 700;
-    const left = window.screenX + (window.outerWidth - width) / 2;
-    const top = window.screenY + (window.outerHeight - height) / 2;
-
-    const popup = window.open(
-      `${API_URL}/auth/xero`,
-      'xero-auth',
-      `width=${width},height=${height},left=${left},top=${top}`
-    );
-
-    if (!popup) {
-      setError('Popup blocked! Please allow popups for this site.');
-    }
-  }
-
-  async function disconnect() {
-    try {
-      await fetch(`${API_URL}/api/disconnect`, { method: 'POST' });
-      setConnected(false);
-      setTenants([]);
-    } catch (err) {
-      setError('Failed to disconnect: ' + err.message);
-    }
-  }
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="container">
         <h1>Xero OAuth PoC</h1>
@@ -88,36 +24,28 @@ function App() {
     <div className="container">
       <h1>Xero OAuth PoC</h1>
 
-      <div className={`status ${connected ? 'connected' : 'disconnected'}`}>
-        {connected ? 'Connected to Xero' : 'Not connected to Xero'}
-      </div>
+      <StatusIndicator connected={connected} />
 
-      {error && <div className="error">{error}</div>}
+      {displayError && <div className="error">{displayError}</div>}
 
       <div className="actions">
         {!connected && (
-          <button className="btn btn-primary" onClick={connectToXero}>
+          <button className="btn btn-primary" onClick={connect}>
             Connect to Xero
           </button>
         )}
         {connected && (
-          <button className="btn btn-danger" onClick={disconnect}>
-            Disconnect
+          <button
+            className="btn btn-danger"
+            onClick={() => disconnectMutation.mutate()}
+            disabled={disconnectMutation.isPending}
+          >
+            {disconnectMutation.isPending ? 'Disconnecting...' : 'Disconnect'}
           </button>
         )}
       </div>
 
-      {connected && tenants.length > 0 && (
-        <div className="tenants">
-          <h3>Connected Organizations:</h3>
-          {tenants.map((tenant) => (
-            <div key={tenant.id || tenant.tenantId} className="tenant">
-              <div className="tenant-name">{tenant.name || tenant.tenantName}</div>
-              <div className="tenant-id">{tenant.id || tenant.tenantId}</div>
-            </div>
-          ))}
-        </div>
-      )}
+      {connected && <TenantList tenants={tenants} />}
     </div>
   );
 }
