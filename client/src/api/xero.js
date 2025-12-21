@@ -15,3 +15,14 @@ export async function disconnectXero() {
 export function getXeroAuthUrl() {
   return `${API_URL}/auth/xero`;
 }
+
+export async function callXeroApi(endpoint, tenantId) {
+  const res = await fetch(`${API_URL}/api/xero${endpoint}?tenantId=${tenantId}`);
+
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.error || `Xero API error: ${res.status}`);
+  }
+
+  return res.json();
+}

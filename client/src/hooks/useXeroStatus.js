@@ -12,5 +12,8 @@ export function useXeroStatus() {
     ...query,
     connected: query.data?.connected ?? false,
     tenants: query.data?.tenants ?? [],
+    accessToken: query.data?.access_token ?? null,
+    refreshToken: query.data?.refresh_token ?? null,
+    scopes: query.data?.scopes ?? null,
   };
 }
