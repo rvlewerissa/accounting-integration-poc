@@ -11,7 +11,7 @@ import {
   QB_REDIRECT_URI,
   QB_SCOPES,
 } from '../config/quickbooks.js';
-import { saveTokens } from '../utils/tokens.js';
+import { saveTokens } from '../utils/xero-tokens.js';
 import { saveRealmTokens } from '../utils/qb-tokens.js';
 import { exchangeCodeForTokens, getConnections } from '../services/xero.js';
 import {
@@ -153,7 +153,10 @@ router.get('/quickbooks/callback', async (req, res) => {
     const tokenData = await exchangeQBCode(code, realmId);
 
     // Fetch company info
-    const companyResponse = await getCompanyInfo(tokenData.access_token, realmId);
+    const companyResponse = await getCompanyInfo(
+      tokenData.access_token,
+      realmId
+    );
     const company = companyResponse.CompanyInfo;
 
     // Update tokens with company info

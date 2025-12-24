@@ -4,14 +4,38 @@ import { callQBApi, callQBQuery } from '../api/quickbooks';
 // QuickBooks uses SQL-like queries, but also has direct endpoints
 export const QB_ENDPOINTS = [
   { label: 'Company Info', path: '/companyinfo', isQuery: false },
-  { label: 'Invoices', query: 'SELECT * FROM Invoice MAXRESULTS 10', isQuery: true },
-  { label: 'Customers', query: 'SELECT * FROM Customer MAXRESULTS 10', isQuery: true },
-  { label: 'Vendors', query: 'SELECT * FROM Vendor MAXRESULTS 10', isQuery: true },
-  { label: 'Accounts', query: 'SELECT * FROM Account MAXRESULTS 10', isQuery: true },
+  {
+    label: 'Invoices',
+    query: 'SELECT * FROM Invoice MAXRESULTS 10',
+    isQuery: true,
+  },
+  {
+    label: 'Customers',
+    query: 'SELECT * FROM Customer MAXRESULTS 10',
+    isQuery: true,
+  },
+  {
+    label: 'Vendors',
+    query: 'SELECT * FROM Vendor MAXRESULTS 10',
+    isQuery: true,
+  },
+  {
+    label: 'Accounts',
+    query: 'SELECT * FROM Account MAXRESULTS 10',
+    isQuery: true,
+  },
   { label: 'Items', query: 'SELECT * FROM Item MAXRESULTS 10', isQuery: true },
-  { label: 'Payments', query: 'SELECT * FROM Payment MAXRESULTS 10', isQuery: true },
+  {
+    label: 'Payments',
+    query: 'SELECT * FROM Payment MAXRESULTS 10',
+    isQuery: true,
+  },
   { label: 'Bills', query: 'SELECT * FROM Bill MAXRESULTS 10', isQuery: true },
-  { label: 'Purchases', query: 'SELECT * FROM Purchase MAXRESULTS 10', isQuery: true },
+  {
+    label: 'Purchases',
+    query: 'SELECT * FROM Purchase MAXRESULTS 10',
+    isQuery: true,
+  },
 ];
 
 export function QBApiExplorer({ realmId }) {
@@ -35,9 +59,10 @@ export function QBApiExplorer({ realmId }) {
         data = await callQBQuery(selectedEndpoint.query, realmId);
       } else {
         // For companyinfo, we need to append the realmId
-        const endpoint = selectedEndpoint.path === '/companyinfo'
-          ? `/companyinfo/${realmId}`
-          : selectedEndpoint.path;
+        const endpoint =
+          selectedEndpoint.path === '/companyinfo'
+            ? `/companyinfo/${realmId}`
+            : selectedEndpoint.path;
         data = await callQBApi(endpoint, realmId);
       }
       setResponse(data);
@@ -79,7 +104,9 @@ export function QBApiExplorer({ realmId }) {
       )}
 
       {!realmId && (
-        <p className="text-sm text-gray-500">Connect to QuickBooks to explore the API.</p>
+        <p className="text-sm text-gray-500">
+          Connect to QuickBooks to explore the API.
+        </p>
       )}
 
       {error && (

@@ -3,7 +3,10 @@ export function TenantSelector({ tenants, selectedTenantId, onSelect }) {
 
   return (
     <div>
-      <label htmlFor="tenant-select" className="block text-sm font-medium text-gray-700 mb-1">
+      <label
+        htmlFor="tenant-select"
+        className="block text-sm font-medium text-gray-700 mb-1"
+      >
         Organization
       </label>
       <select

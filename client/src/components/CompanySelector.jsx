@@ -3,7 +3,10 @@ export function CompanySelector({ companies, selectedRealmId, onSelect }) {
 
   return (
     <div>
-      <label htmlFor="company-select" className="block text-sm font-medium text-gray-700 mb-1">
+      <label
+        htmlFor="company-select"
+        className="block text-sm font-medium text-gray-700 mb-1"
+      >
         Company
       </label>
       <select

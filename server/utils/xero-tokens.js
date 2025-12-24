@@ -3,7 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const TOKENS_FILE = path.join(__dirname, '..', 'tokens.json');
+const TOKENS_FILE = path.join(__dirname, '..', 'xero-tokens.json');
 
 export function saveTokens(data) {
   fs.writeFileSync(TOKENS_FILE, JSON.stringify(data, null, 2));

@@ -5,7 +5,7 @@ import {
   XERO_CLIENT_SECRET,
   REDIRECT_URI,
 } from '../config/xero.js';
-import { saveTokens, loadTokens } from '../utils/tokens.js';
+import { saveTokens, loadTokens } from '../utils/xero-tokens.js';
 
 const XERO_BASIC_AUTH = Buffer.from(
   `${XERO_CLIENT_ID}:${XERO_CLIENT_SECRET}`

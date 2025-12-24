@@ -7,13 +7,17 @@ export async function fetchQBStatus() {
 }
 
 export async function disconnectQB(realmId) {
-  const res = await fetch(`${API_URL}/api/quickbooks/disconnect/${realmId}`, { method: 'POST' });
+  const res = await fetch(`${API_URL}/api/quickbooks/disconnect/${realmId}`, {
+    method: 'POST',
+  });
   if (!res.ok) throw new Error('Failed to disconnect');
   return res.json();
 }
 
 export async function disconnectAllQB() {
-  const res = await fetch(`${API_URL}/api/quickbooks/disconnect-all`, { method: 'POST' });
+  const res = await fetch(`${API_URL}/api/quickbooks/disconnect-all`, {
+    method: 'POST',
+  });
   if (!res.ok) throw new Error('Failed to disconnect all');
   return res.json();
 }
@@ -23,7 +27,9 @@ export function getQBAuthUrl() {
 }
 
 export async function callQBApi(endpoint, realmId) {
-  const res = await fetch(`${API_URL}/api/quickbooks${endpoint}?realmId=${realmId}`);
+  const res = await fetch(
+    `${API_URL}/api/quickbooks${endpoint}?realmId=${realmId}`
+  );
 
   if (!res.ok) {
     const data = await res.json();
@@ -35,7 +41,9 @@ export async function callQBApi(endpoint, realmId) {
 
 export async function callQBQuery(query, realmId) {
   const res = await fetch(
-    `${API_URL}/api/quickbooks-query?realmId=${realmId}&query=${encodeURIComponent(query)}`
+    `${API_URL}/api/quickbooks-query?realmId=${realmId}&query=${encodeURIComponent(
+      query
+    )}`
   );
 
   if (!res.ok) {

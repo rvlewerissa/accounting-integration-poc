@@ -61,7 +61,9 @@ export function ApiExplorer({ tenantId, selectedEndpoint, onEndpointChange }) {
       </div>
 
       {!tenantId && (
-        <p className="text-sm text-gray-500">Select an organization to explore the API.</p>
+        <p className="text-sm text-gray-500">
+          Select an organization to explore the API.
+        </p>
       )}
 
       {error && (

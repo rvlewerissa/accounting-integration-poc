@@ -1,8 +1,13 @@
 import { Router } from 'express';
 import { XERO_API_BASE_URL, SCOPES } from '../config/xero.js';
 import { QB_API_BASE_URL, QB_SCOPES } from '../config/quickbooks.js';
-import { loadTokens, deleteTokens } from '../utils/tokens.js';
-import { loadAllRealms, loadRealmTokens, deleteRealmTokens, deleteAllQBTokens } from '../utils/qb-tokens.js';
+import { loadTokens, deleteTokens } from '../utils/xero-tokens.js';
+import {
+  loadAllRealms,
+  loadRealmTokens,
+  deleteRealmTokens,
+  deleteAllQBTokens,
+} from '../utils/qb-tokens.js';
 import { requireXeroAuth } from '../middleware/auth.js';
 import { revokeToken, getValidTokensForRealm } from '../services/quickbooks.js';
 
@@ -133,7 +138,9 @@ router.get('/quickbooks/*', async (req, res) => {
 
   const tokens = await getValidTokensForRealm(realmId);
   if (!tokens) {
-    return res.status(401).json({ error: 'Not connected to this QuickBooks company' });
+    return res
+      .status(401)
+      .json({ error: 'Not connected to this QuickBooks company' });
   }
 
   try {
@@ -171,7 +178,9 @@ router.get('/quickbooks-query', async (req, res) => {
 
   const tokens = await getValidTokensForRealm(realmId);
   if (!tokens) {
-    return res.status(401).json({ error: 'Not connected to this QuickBooks company' });
+    return res
+      .status(401)
+      .json({ error: 'Not connected to this QuickBooks company' });
   }
 
   try {

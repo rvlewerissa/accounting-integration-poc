@@ -24,3 +24,7 @@ Thumbs.db
 
 # Testing
 coverage/
+
+# Tokens JSON
+server/xero-tokens.json
+server/qb-tokens.json

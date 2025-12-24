@@ -17,7 +17,9 @@ export function getXeroAuthUrl() {
 }
 
 export async function callXeroApi(endpoint, tenantId) {
-  const res = await fetch(`${API_URL}/api/xero${endpoint}?tenantId=${tenantId}`);
+  const res = await fetch(
+    `${API_URL}/api/xero${endpoint}?tenantId=${tenantId}`
+  );
 
   if (!res.ok) {
     const data = await res.json();

@@ -1,5 +1,6 @@
 // Xero API URLs
-export const XERO_AUTH_URL = 'https://login.xero.com/identity/connect/authorize';
+export const XERO_AUTH_URL =
+  'https://login.xero.com/identity/connect/authorize';
 export const XERO_TOKEN_URL = 'https://identity.xero.com/connect/token';
 export const XERO_CONNECTIONS_URL = 'https://api.xero.com/connections';
 export const XERO_API_BASE_URL = 'https://api.xero.com/api.xro/2.0';

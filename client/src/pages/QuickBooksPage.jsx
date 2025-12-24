@@ -19,14 +19,19 @@ export function QuickBooksPage() {
   const effectiveRealmId = selectedRealmId || companies[0]?.realmId;
   const selectedCompany = companies.find((c) => c.realmId === effectiveRealmId);
 
-  const displayError = popupError || error?.message || disconnectMutation.error?.message;
+  const displayError =
+    popupError || error?.message || disconnectMutation.error?.message;
 
   if (isLoading) {
     return (
       <div className="flex gap-6 w-full justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-md flex-[2] max-w-4xl">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">QuickBooks Integration</h2>
-          <div className="p-4 bg-gray-50 rounded text-gray-600">Checking connection status...</div>
+        <div className="bg-white p-8 rounded-lg shadow-md flex-2 max-w-4xl">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+            QuickBooks Integration
+          </h2>
+          <div className="p-4 bg-gray-50 rounded text-gray-600">
+            Checking connection status...
+          </div>
         </div>
       </div>
     );
@@ -35,14 +40,18 @@ export function QuickBooksPage() {
   return (
     <div className="flex gap-6 w-full justify-center">
       {/* Left: Main Panel */}
-      <div className="bg-white p-8 rounded-lg shadow-md flex-[2] max-w-4xl">
+      <div className="bg-white p-8 rounded-lg shadow-md flex-2 max-w-4xl">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-gray-800">QuickBooks Integration</h2>
+          <h2 className="text-xl font-semibold text-gray-800">
+            QuickBooks Integration
+          </h2>
           <StatusIndicator connected={connected} />
         </div>
 
         {displayError && (
-          <div className="p-4 bg-red-50 text-red-700 rounded mb-4">{displayError}</div>
+          <div className="p-4 bg-red-50 text-red-700 rounded mb-4">
+            {displayError}
+          </div>
         )}
 
         {!connected && (
@@ -80,7 +89,9 @@ export function QuickBooksPage() {
                 }}
                 disabled={disconnectMutation.isPending || !effectiveRealmId}
               >
-                {disconnectMutation.isPending ? 'Disconnecting...' : 'Disconnect'}
+                {disconnectMutation.isPending
+                  ? 'Disconnecting...'
+                  : 'Disconnect'}
               </button>
             </div>
 
@@ -101,7 +112,9 @@ export function QuickBooksPage() {
             )}
 
             <div className="border-t border-gray-200 pt-6">
-              <h3 className="text-lg font-medium text-gray-800 mb-4">API Explorer</h3>
+              <h3 className="text-lg font-medium text-gray-800 mb-4">
+                API Explorer
+              </h3>
               <QBApiExplorer realmId={effectiveRealmId} />
             </div>
           </div>
@@ -113,13 +126,17 @@ export function QuickBooksPage() {
         <h3 className="text-lg font-medium text-gray-800 mb-4">Request Info</h3>
         <div className="space-y-4">
           <div>
-            <div className="text-xs font-medium text-gray-500 uppercase mb-1">Base URL</div>
+            <div className="text-xs font-medium text-gray-500 uppercase mb-1">
+              Base URL
+            </div>
             <code className="block text-sm bg-gray-100 p-2 rounded break-all">
               {QB_API_BASE}/{effectiveRealmId || '<realm_id>'}
             </code>
           </div>
           <div>
-            <div className="text-xs font-medium text-gray-500 uppercase mb-1">Headers</div>
+            <div className="text-xs font-medium text-gray-500 uppercase mb-1">
+              Headers
+            </div>
             <div className="text-sm bg-gray-100 p-2 rounded font-mono space-y-1">
               <div>
                 <span className="text-purple-600">Authorization:</span>
@@ -134,34 +151,54 @@ export function QuickBooksPage() {
             </div>
           </div>
           <div>
-            <div className="text-xs font-medium text-gray-500 uppercase mb-1">Company</div>
+            <div className="text-xs font-medium text-gray-500 uppercase mb-1">
+              Company
+            </div>
             <div className="text-sm bg-gray-100 p-2 rounded">
-              <div className="text-gray-600">{selectedCompany?.name || '<not selected>'}</div>
+              <div className="text-gray-600">
+                {selectedCompany?.name || '<not selected>'}
+              </div>
               {selectedCompany?.country && (
-                <div className="text-xs text-gray-500">{selectedCompany.country}</div>
+                <div className="text-xs text-gray-500">
+                  {selectedCompany.country}
+                </div>
               )}
             </div>
           </div>
           <div>
-            <div className="text-xs font-medium text-gray-500 uppercase mb-1">Realm ID</div>
+            <div className="text-xs font-medium text-gray-500 uppercase mb-1">
+              Realm ID
+            </div>
             <div className="text-xs bg-gray-100 p-2 rounded font-mono break-all text-gray-600">
               {effectiveRealmId || '<not selected>'}
             </div>
           </div>
           <div>
-            <div className="text-xs font-medium text-gray-500 uppercase mb-1">Scopes</div>
+            <div className="text-xs font-medium text-gray-500 uppercase mb-1">
+              Scopes
+            </div>
             <div className="text-xs bg-gray-100 p-2 rounded font-mono break-all text-gray-600">
               {scopes || '<not connected>'}
             </div>
           </div>
           <div>
-            <div className="text-xs font-medium text-gray-500 uppercase mb-1">Connected Companies</div>
+            <div className="text-xs font-medium text-gray-500 uppercase mb-1">
+              Connected Companies
+            </div>
             <div className="text-xs bg-gray-100 p-2 rounded text-gray-600">
               {companies.length > 0 ? (
                 <ul className="space-y-1">
                   {companies.map((c) => (
-                    <li key={c.realmId} className={c.realmId === effectiveRealmId ? 'font-medium' : ''}>
-                      {c.name} {c.expired && <span className="text-red-500">(expired)</span>}
+                    <li
+                      key={c.realmId}
+                      className={
+                        c.realmId === effectiveRealmId ? 'font-medium' : ''
+                      }
+                    >
+                      {c.name}{' '}
+                      {c.expired && (
+                        <span className="text-red-500">(expired)</span>
+                      )}
                     </li>
                   ))}
                 </ul>
