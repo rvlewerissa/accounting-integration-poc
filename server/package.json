@@ -1,5 +1,5 @@
 {
-  "name": "xero-poc-server",
+  "name": "accounting-integration-poc-server",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
