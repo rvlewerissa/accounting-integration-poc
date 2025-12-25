@@ -26,17 +26,23 @@ app.listen(PORT, () => {
   console.log('  GET  /auth/quickbooks/callback - QuickBooks OAuth callback');
   console.log('');
   console.log('Xero API:');
-  console.log('  GET  /api/status               - Xero connection status');
-  console.log('  GET  /api/connections          - Get connected Xero tenants');
-  console.log('  GET  /api/token                - Get Xero access token');
+  console.log('  GET  /api/xero/status          - Xero connection status');
+  console.log('  GET  /api/xero/connections     - Get connected Xero tenants');
+  console.log('  GET  /api/xero/token           - Get Xero access token');
   console.log('  GET  /api/xero/*               - Proxy Xero API calls');
-  console.log('  POST /api/disconnect           - Disconnect Xero');
+  console.log('  POST /api/xero/disconnect      - Disconnect Xero');
   console.log('');
   console.log('QuickBooks API:');
-  console.log('  GET  /api/quickbooks/status           - QuickBooks connection status');
+  console.log(
+    '  GET  /api/quickbooks/status           - QuickBooks connection status'
+  );
   console.log('  GET  /api/quickbooks/token/:realmId   - Get tokens for realm');
-  console.log('  GET  /api/quickbooks/*                - Proxy QuickBooks API calls');
+  console.log(
+    '  GET  /api/quickbooks/*                - Proxy QuickBooks API calls'
+  );
   console.log('  GET  /api/quickbooks-query            - QuickBooks SQL query');
   console.log('  POST /api/quickbooks/disconnect/:id   - Disconnect company');
-  console.log('  POST /api/quickbooks/disconnect-all   - Disconnect all companies');
+  console.log(
+    '  POST /api/quickbooks/disconnect-all   - Disconnect all companies'
+  );
 });

@@ -14,12 +14,12 @@ import { revokeToken, getValidTokensForRealm } from '../services/quickbooks.js';
 const router = Router();
 
 // Get current connections
-router.get('/connections', requireXeroAuth, async (req, res) => {
+router.get('/xero/connections', requireXeroAuth, async (req, res) => {
   res.json({ tenants: req.xeroTokens.tenants });
 });
 
 // Get token status (for debugging)
-router.get('/status', (req, res) => {
+router.get('/xero/status', (req, res) => {
   const tokens = loadTokens();
 
   if (!tokens) {
@@ -40,7 +40,21 @@ router.get('/status', (req, res) => {
   });
 });
 
-// Proxy Xero API calls
+// Get access token (for frontend direct API calls)
+router.get('/xero/token', requireXeroAuth, async (req, res) => {
+  res.json({
+    access_token: req.xeroTokens.access_token,
+    expires_at: req.xeroTokens.expires_at,
+  });
+});
+
+// Disconnect (clear tokens)
+router.post('/xero/disconnect', (req, res) => {
+  deleteTokens();
+  res.json({ success: true });
+});
+
+// Proxy Xero API calls (must be after specific routes)
 router.get('/xero/*', requireXeroAuth, async (req, res) => {
   const endpoint = '/' + req.params[0];
   const tenantId = req.query.tenantId;
@@ -69,20 +83,6 @@ router.get('/xero/*', requireXeroAuth, async (req, res) => {
     console.error('Xero API error:', err);
     res.status(500).json({ error: err.message });
   }
-});
-
-// Get access token (for frontend direct API calls)
-router.get('/token', requireXeroAuth, async (req, res) => {
-  res.json({
-    access_token: req.xeroTokens.access_token,
-    expires_at: req.xeroTokens.expires_at,
-  });
-});
-
-// Disconnect (clear tokens)
-router.post('/disconnect', (req, res) => {
-  deleteTokens();
-  res.json({ success: true });
 });
 
 // ==================== QuickBooks API ====================
